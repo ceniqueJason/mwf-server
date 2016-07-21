@@ -1,5 +1,9 @@
 var ProjectServ = require("./project.service");
 
+app.get("/", function(req, res){
+  res.send("Hello World")
+});
+
 app.get("/api/projects", function(req, res) {
   ProjectServ
     .find()

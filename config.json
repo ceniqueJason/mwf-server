@@ -1,0 +1,14 @@
+{
+  "database": {
+    "name": "mwf",
+    "hosts": [
+      {
+        "address": "192.168.12.134",
+        "port": 27017
+      }
+    ],
+    "connection": {
+      "timeout": 10
+    }
+  }
+}

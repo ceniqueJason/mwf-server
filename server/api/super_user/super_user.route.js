@@ -294,6 +294,24 @@ app.post("/api/company/query", function(req, res) {
 });
 
 
+app.get("/api/company/queryOne", function(req, res) {
+  var company = req.query;
+  var company_query = {id:company.id};
+  SuperUserServ
+    .findOne(company_query)
+    .then(function(result){
+      if(result!=null){
+        res.send(result);
+      }else{
+        res.status(500).send('No Company Found');
+      }
+    })
+    .catch(function(err){
+      res.status(500).send('Error :' + err);
+    })
+});
+
+
 app.get("/api/company/queryAll", function(req, res) {
   SuperUserServ
     .find()

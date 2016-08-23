@@ -62,7 +62,7 @@ app.post("/api/users/insert", function(req, res) {
                         var sid = 's00001';
                       }
                         var ubirthday = dateFormat(new Date(user.birthday),"isoDate");
-                        var edate = dateFormat(new Date(user.edate),"isoDate");
+                        var edate = dateFormat(new Date(user.employment_date),"isoDate");
                         var iBeaconNo = 'i123';
 
                         var create = {cid:user.cid,sid:sid,email:user.email,password:user.password,
@@ -164,6 +164,25 @@ function querymaker(user){
   return query;
 }
 
+
+app.get("/api/users/queryOne", function(req, res) {
+  var user = req.query;
+  var user_query = {sid:user.sid};
+  UserServ
+    .findOne(user_query)
+    .then(function(result){
+      if(result!=null){
+        res.send(result);
+      }else{
+        res.status(500).send('No User Found');
+      }
+    })
+    .catch(function(err){
+      res.status(500).send('Error :' + err);
+    })
+});
+
+
 app.get("/api/users/queryAll", function(req, res) {
   UserServ
     .find()
@@ -180,8 +199,7 @@ app.get("/api/users/queryAll", function(req, res) {
 });
 
 
-app.patch("api/users/update_owner",function(req, res){
-  console.log('ssdfoisd');
+app.patch("/api/users/update_owner",function(req, res){
   var user = req.body;
   var user_query = {sid:user.sid};
 
@@ -234,7 +252,7 @@ app.patch("/api/users/update", function(req, res) {
               .findOne(emila_query)//find if the email existed
               .then(function(eresult){
                 var bday = dateFormat(new Date(user.birthday),"isoDate");
-                var edate = dateFormat(new Date(user.edate),"isoDate");
+                var edate = dateFormat(new Date(user.employment_date),"isoDate");
                 var update_query = {email:user.email,password:user.password,chiname:user.chiname,
                   engname:user.engname,role:user.role,iBeaconNo:user.iBeaconNo,department:user.department,
                   worktype:user.worktype,contactno:user.contactno,birthday:bday,employment_date:edate,projectno:user.projectno};

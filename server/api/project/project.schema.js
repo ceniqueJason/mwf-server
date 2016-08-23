@@ -4,7 +4,14 @@ var Promise = require('bluebird');
 
 var projectSchema = new Schema({
   name: String,
-  type: String
+  projectNo: String,
+  description:String,
+  address: String,
+  type: String,
+  assigned_date:{ type: Date, default: Date.now('YYYY-MM-DDT00:00:00Z')},
+  start_date:Date,
+  end_date:Date,
+  staff:[String]
 });
 
 model = mongoose.model('Project', projectSchema);

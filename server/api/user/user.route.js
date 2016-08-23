@@ -1,56 +1,21 @@
 var UserServ = require("./user.service");
+var SuperUserServ = require("../super_user/super_user.service");
 
-app.post("/api/users/register", function(req, res) {
-  var useradd = req.body;
+app.post("/api/users/login", function(req, res) {
+  var user = req.body;
 
-  var query = {staffID: useradd.staffID};
+  var query = {email: user.email,password:user.password};
   UserServ
     .findOne(query)
     .then(function(result){
-      if(result == null){
-        UserServ
-          .create(req.body)
-          .then(function(){
-            // res.write('OK ---------' + result);
-            res.send('Your registry has been done successfully');
-            // res.end();
-          })
-          .catch(function(err){
-            res.status(500).send('Error :' + err);
-          })
+      if(result != null){
+            res.send('Successfully Login!');
       }else{
-        // res.write('Not OK ---------' + result);
-        // res.append('Sorry, user already exists!');
-        res.status(500).send('Sorry, user already exists!');
+        res.status(500).send('Invalid userID or password!');
       }
     })
     .catch(function(err){
       res.status(500).send('Error :' + err);
-      res.end();
 
-    })
-});
-
-app.get("/api/users/login", function(req, res) {
-
-  var userDetail = req.body;
-
-  /**
-  {
-      name: "John",
-      username: "john",
-      password: "123"
-  }
-  **/
-
-  userDetail.name;
-
-  UserServ
-    .findOne(req.body)
-    .then(function(result){
-      res.send("OK"+" space "+result);
-    })
-    .catch(function(err){
-      res.status(500).send(err);
     })
 });
